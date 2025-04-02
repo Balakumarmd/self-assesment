@@ -2633,7 +2633,7 @@ function loadQuestion() {
         const currentQuizData = shuffleOptions(selectedQuestions[currentQuestion]);
         const questionContainer = document.getElementById('question-container');
         questionContainer.innerHTML = `
-            <div class="question-number">Question ${currentQuestion + 1}</div>
+            <strong><div class="question-number">Question ${currentQuestion + 1}</div></strong> <br>
             <div class="question">${currentQuizData.question.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
             <div class="answers">
                 <label class="answer-option"><input type="radio" name="answer" value="a"> ${currentQuizData.a.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
