@@ -2592,6 +2592,7 @@ const allQuizData = [
     }
     // Add more questions for other levels here
 ];
+
 let currentQuestion = 0;
 let score = 0;
 let selectedQuestions = [];
@@ -2615,17 +2616,31 @@ function getRandomQuestions(questions, num) {
     return selected;
 }
 
+function shuffleOptions(quizData) {
+    const options = ['a', 'b', 'c', 'd'];
+    const shuffledOptions = options.sort(() => 0.5 - Math.random());
+    const shuffledQuizData = {};
+    shuffledOptions.forEach((option, index) => {
+        shuffledQuizData[option] = quizData[options[index]];
+    });
+    shuffledQuizData.question = quizData.question;
+    shuffledQuizData.correct = shuffledOptions[options.indexOf(quizData.correct)];
+    return shuffledQuizData;
+}
+
 function loadQuestion() {
     if (currentQuestion < selectedQuestions.length) {
-        const currentQuizData = selectedQuestions[currentQuestion];
+        const currentQuizData = shuffleOptions(selectedQuestions[currentQuestion]);
         const questionContainer = document.getElementById('question-container');
         questionContainer.innerHTML = `
-            <div class="question-number">Question ${currentQuestion + 1}</div> <br>
-            <div class="question">${currentQuizData.question}</div>
-            <label><input type="radio" name="answer" value="a"> ${currentQuizData.a}</label>
-            <label><input type="radio" name="answer" value="b"> ${currentQuizData.b}</label>
-            <label><input type="radio" name="answer" value="c"> ${currentQuizData.c}</label>
-            <label><input type="radio" name="answer" value="d"> ${currentQuizData.d}</label>
+            <div class="question-number">Question ${currentQuestion + 1}</div>
+            <div class="question">${currentQuizData.question.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
+            <div class="answers">
+                <label class="answer-option"><input type="radio" name="answer" value="a"> ${currentQuizData.a.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
+                <label class="answer-option"><input type="radio" name="answer" value="b"> ${currentQuizData.b.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
+                <label class="answer-option"><input type="radio" name="answer" value="c"> ${currentQuizData.c.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
+                <label class="answer-option"><input type="radio" name="answer" value="d"> ${currentQuizData.d.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
+            </div>
         `;
         document.getElementById('next-btn').style.display = 'block';
         document.getElementById('submit-btn').style.display = 'none';
@@ -2650,6 +2665,7 @@ function nextQuestion() {
     if (selectedAnswer === selectedQuestions[currentQuestion].correct) {
         score++;
     }
+    selectedQuestions[currentQuestion].selected = selectedAnswer;
     currentQuestion++;
     if (currentQuestion < selectedQuestions.length) {
         loadQuestion();
@@ -2662,7 +2678,29 @@ function nextQuestion() {
 function submitQuiz() {
     const results = document.getElementById('results');
     results.innerHTML = `You scored ${score} out of ${selectedQuestions.length}`;
+    displayAnswers();
     document.getElementById('restart-btn').style.display = 'block';
+    document.getElementById('retake-btn').style.display = 'block';
+}
+
+function displayAnswers() {
+    const questionContainer = document.getElementById('question-container');
+    questionContainer.innerHTML = '';
+    selectedQuestions.forEach((quizData, index) => {
+        const isCorrect = quizData.selected === quizData.correct;
+        const answerClass = isCorrect ? 'correct' : 'incorrect';
+        questionContainer.innerHTML += `
+            <div class="question-number">Question ${index + 1}</div>
+            <div class="question">${quizData.question.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
+            <div class="answers">
+                <label class="answer-option ${answerClass}"><input type="radio" name="answer" value="a" disabled ${quizData.selected === 'a' ? 'checked' : ''}> ${quizData.a.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
+                <label class="answer-option ${answerClass}"><input type="radio" name="answer" value="b" disabled ${quizData.selected === 'b' ? 'checked' : ''}> ${quizData.b.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
+                <label class="answer-option ${answerClass}"><input type="radio" name="answer" value="c" disabled ${quizData.selected === 'c' ? 'checked' : ''}> ${quizData.c.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
+                <label class="answer-option ${answerClass}"><input type="radio" name="answer" value="d" disabled ${quizData.selected === 'd' ? 'checked' : ''}> ${quizData.d.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
+                <div class="correct-answer">Correct answer: ${quizData[quizData.correct].replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
+            </div>
+        `;
+    });
 }
 
 function restartQuiz() {
@@ -2670,6 +2708,18 @@ function restartQuiz() {
     document.querySelector('.levels').style.display = 'block';
     document.getElementById('results').innerHTML = '';
     document.getElementById('restart-btn').style.display = 'none';
+    document.getElementById('retake-btn').style.display = 'none';
+}
+
+function retakeQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    selectedQuestions = selectedQuestions.map(shuffleOptions); // Shuffle options for each question
+    selectedQuestions.forEach(q => q.selected = null); // Reset selected answers
+    loadQuestion();
+    document.getElementById('results').innerHTML = '';
+    document.getElementById('restart-btn').style.display = 'none';
+    document.getElementById('retake-btn').style.display = 'none';
 }
 
 function countQuestions() {
@@ -2680,8 +2730,11 @@ function countQuestions() {
 // Call the function to display the total number of questions
 countQuestions();
 
+// Hide the buttons initially
+document.getElementById('restart-btn').style.display = 'none';
+document.getElementById('retake-btn').style.display = 'none';
+
 // Load the first question when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     loadQuestion();
 });
-
