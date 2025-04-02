@@ -2690,14 +2690,14 @@ function displayAnswers() {
         const isCorrect = quizData.selected === quizData.correct;
         const answerClass = isCorrect ? 'correct' : 'incorrect';
         questionContainer.innerHTML += `
-            <div class="question-number">Question ${index + 1}</div>
+           <strong> <div class="question-number">Question ${index + 1}</div></strong> <br>
             <div class="question">${quizData.question.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
             <div class="answers">
                 <label class="answer-option ${answerClass}"><input type="radio" name="answer" value="a" disabled ${quizData.selected === 'a' ? 'checked' : ''}> ${quizData.a.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
                 <label class="answer-option ${answerClass}"><input type="radio" name="answer" value="b" disabled ${quizData.selected === 'b' ? 'checked' : ''}> ${quizData.b.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
                 <label class="answer-option ${answerClass}"><input type="radio" name="answer" value="c" disabled ${quizData.selected === 'c' ? 'checked' : ''}> ${quizData.c.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
                 <label class="answer-option ${answerClass}"><input type="radio" name="answer" value="d" disabled ${quizData.selected === 'd' ? 'checked' : ''}> ${quizData.d.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</label>
-                <div class="correct-answer">Correct answer: ${quizData[quizData.correct].replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
+                <div class="correct-answer">Correct answer: ${quizData[quizData.correct].replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div> <br>
             </div>
         `;
     });
