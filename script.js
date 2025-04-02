@@ -2620,7 +2620,7 @@ function loadQuestion() {
         const currentQuizData = selectedQuestions[currentQuestion];
         const questionContainer = document.getElementById('question-container');
         questionContainer.innerHTML = `
-            <div class="question-number">Question ${currentQuestion + 1}</div>
+            <div class="question-number">Question ${currentQuestion + 1}</div> <br>
             <div class="question">${currentQuizData.question}</div>
             <label><input type="radio" name="answer" value="a"> ${currentQuizData.a}</label>
             <label><input type="radio" name="answer" value="b"> ${currentQuizData.b}</label>
