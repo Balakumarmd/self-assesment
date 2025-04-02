@@ -93,7 +93,7 @@ input[type="radio"] {
     font-size: 1.2em;
     margin-top: 20px;
     text-align: center;
-    background-color: #28a745;
+    background-color: #bfc2bf;
 }
 .answers {
     display: flex;
@@ -126,3 +126,55 @@ input[type="radio"] {
     background-color: #218838;
 }
 
+.correct {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.incorrect {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.correct-answer {
+    font-weight: bold;
+    color: #155724;
+    margin-top: 10px;
+}
+
+
+
+@media (max-width: 600px) {
+    .container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .level-btn {
+        padding: 8px 12px;
+        font-size: 0.8em;
+    }
+
+    .next-btn, .submit-btn, .restart-btn {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+}
+
+.retake-btn, .restart-btn {
+    display: none;
+    padding: 10px 20px;
+    background-color: #ffc107;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.retake-btn:hover, .restart-btn:hover {
+    background-color: #e0a800;
+}
