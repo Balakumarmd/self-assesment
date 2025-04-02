@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Evaluation Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Self-Evaluation Quiz</h1>
+        <div class="levels">
+            <button class="level-btn" onclick="startQuiz(1)">Level 1</button>
+            <button class="level-btn" onclick="startQuiz(2)">Level 2</button>
+            <button class="level-btn" onclick="startQuiz(3)">Level 3</button>
+            <button class="level-btn" onclick="startQuiz(4)">Level 4</button>
+            <button class="level-btn" onclick="startQuiz(5)">Level 5</button>
+            <button class="level-btn" onclick="startQuiz(6)">Level 6</button>
+            <button class="level-btn" onclick="startQuiz(7)">Level 7</button>
+            <button class="level-btn" onclick="startQuiz(8)">Level 8</button>
+            <button class="level-btn" onclick="startQuiz(9)">Level 9</button>
+            <button class="level-btn" onclick="startQuiz(10)">Level 10</button>
+            <button class="level-btn" onclick="startQuiz(11)">Level 11</button>
+            <button class="level-btn" onclick="startQuiz(12)">Level 12</button>
+            <button class="level-btn" onclick="startQuiz(13)">Level 13</button>
+        </div>
+        <div id="question-count"></div>
+        <div id="quiz-container" class="quiz-container">
+            <div id="question-container" class="question-container"></div>
+            <button id="next-btn" class="next-btn" onclick="nextQuestion()">Next</button>
+            <button id="submit-btn" class="submit-btn" onclick="submitQuiz()">Submit</button>
+        </div>
+        <div id="results" class="results"></div>
+        <button id="restart-btn" class="restart-btn" onclick="restartQuiz()">Restart</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
